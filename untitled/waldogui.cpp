@@ -103,7 +103,26 @@ void WaldoGUI::on_pushButton_2_clicked()
         return;
     }
     cvReleaseCapture(&cap);
-    emit imagen_lista();
+    
+     Franjas franj;
+    Mat franjResult;
+    Mat templResult;
+
+    franjResult = franj.run(waldoImage);
+    emit franjasListas(franjResult);
+
+    Mat histogram  =  franjResult.clone();
+    emit RunHistogram(histogram);
+
+
+    TemplateMatching templ;
+    templResult = templ.run(franjResult, result_match);
+    emit templateMatchListo(templResult);
+
+
+    //HistogramModule<1>(&franjResult);
+
+    emit PPB(waldoImage);
 }
 
 void WaldoGUI::on_actionVerFiltros_triggered()
